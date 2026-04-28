@@ -9,3 +9,4 @@ This library assist completely the use of the RC522 rfid module, it integrates t
  ![AutoPlatz Diagram](/SAP_Diagram.jpg)
 #### Schematic
 ![AutoPlatz Schematic](/SAP_schematic.png)
+Disclaimer: The proximity sensor used on the schematic may differe from the one used in the project. This due to limitations of schematic capabilities.
