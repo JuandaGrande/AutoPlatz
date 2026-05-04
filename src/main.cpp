@@ -7,6 +7,15 @@
 #define MISO_PIN    19
 #define MOSI_PIN    23
 #define SALIDA_PIN  2
+#define SENS1 35 
+#define SENS2 32
+#define SENS3 33
+#define SENS4 25
+#define OCC1 15
+#define OCC2 4
+#define OCC3 0
+#define OCC4 2
+
 
 MFRC522 rfid(SS_PIN, RST_PIN);
 
@@ -41,6 +50,17 @@ bool uidAutorizada(byte uidLeida[], byte tamanoUid) {
   return false;
 }
 
+void actualizarEspacios(){
+  if (digitalRead(SENS1)==LOW){digitalWrite(OCC1,HIGH);}
+  else if (digitalRead(SENS1)==HIGH){digitalWrite(OCC1,LOW);}
+  if (digitalRead(SENS2)==LOW){digitalWrite(OCC2,HIGH);}
+  else if (digitalRead(SENS2)==HIGH){digitalWrite(OCC2,LOW);}
+  if (digitalRead(SENS3)==LOW){digitalWrite(OCC3,HIGH);}
+  else if (digitalRead(SENS3)==HIGH){digitalWrite(OCC3,LOW);}
+  if (digitalRead(SENS4)==LOW){digitalWrite(OCC4,HIGH);}
+  else if (digitalRead(SENS4)==HIGH){digitalWrite(OCC4,LOW);}
+}
+
 void setup() {
   Serial.begin(115200);
 
@@ -48,12 +68,23 @@ void setup() {
   rfid.PCD_Init();
 
   pinMode(SALIDA_PIN, OUTPUT);
+  pinMode(OCC1, OUTPUT);
+  pinMode(OCC2, OUTPUT);
+  pinMode(OCC3, OUTPUT);
+  pinMode(OCC4, OUTPUT);
+  pinMode(SENS1, INPUT);
+  pinMode(SENS2, INPUT);
+  pinMode(SENS3, INPUT);
+  pinMode(SENS4, INPUT);
   digitalWrite(SALIDA_PIN, LOW);
 
   Serial.println("Acerca una tarjeta...");
 }
 
 void loop() {
+  
+  actualizarEspacios();
+  
   if (!rfid.PICC_IsNewCardPresent()) {
     return;
   }
@@ -83,5 +114,5 @@ void loop() {
   rfid.PICC_HaltA();
   rfid.PCD_StopCrypto1();
 
-  delay(500);
+  delay(50);
 }
