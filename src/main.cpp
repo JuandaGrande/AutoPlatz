@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include <SPI.h>
 #include <MFRC522.h>
 
@@ -6,20 +7,18 @@
 #define SCK_PIN     18
 #define MISO_PIN    19
 #define MOSI_PIN    23
-#define SALIDA_PIN  2
-#define SENS1 35 
-#define SENS2 32
-#define SENS3 33
-#define SENS4 25
-#define OCC1 15
-#define OCC2 4
-#define OCC3 0
-#define OCC4 2
+#define SALIDA_PIN  2 //REVISAR DUPLICADO //Esto va a ESP2
+#define SENS1 35 //Interno
+#define SENS2 32 //Interno
+#define SENS3 33 //Interno
+#define OCC1 15 //Va a ESP2
+#define OCC2 4 //Va a ESP2
+#define OCC3 0 //CAMBIAR //Va a ESP2
 
 
 MFRC522 rfid(SS_PIN, RST_PIN);
 
-// 4 tarjetas autorizadas
+
 byte tarjetasPermitidas[4][4] = {
   {0xE4, 0xC2, 0x57, 0x80},
   {0x54, 0x53, 0x5A, 0x80},
@@ -51,14 +50,9 @@ bool uidAutorizada(byte uidLeida[], byte tamanoUid) {
 }
 
 void actualizarEspacios(){
-  if (digitalRead(SENS1)==LOW){digitalWrite(OCC1,HIGH);}
-  else if (digitalRead(SENS1)==HIGH){digitalWrite(OCC1,LOW);}
-  if (digitalRead(SENS2)==LOW){digitalWrite(OCC2,HIGH);}
-  else if (digitalRead(SENS2)==HIGH){digitalWrite(OCC2,LOW);}
-  if (digitalRead(SENS3)==LOW){digitalWrite(OCC3,HIGH);}
-  else if (digitalRead(SENS3)==HIGH){digitalWrite(OCC3,LOW);}
-  if (digitalRead(SENS4)==LOW){digitalWrite(OCC4,HIGH);}
-  else if (digitalRead(SENS4)==HIGH){digitalWrite(OCC4,LOW);}
+  digitalWrite(OCC1, digitalRead(SENS1) == LOW);
+  digitalWrite(OCC2, digitalRead(SENS2) == LOW);
+  digitalWrite(OCC3, digitalRead(SENS3) == LOW);
 }
 
 void setup() {
@@ -71,11 +65,9 @@ void setup() {
   pinMode(OCC1, OUTPUT);
   pinMode(OCC2, OUTPUT);
   pinMode(OCC3, OUTPUT);
-  pinMode(OCC4, OUTPUT);
   pinMode(SENS1, INPUT);
   pinMode(SENS2, INPUT);
   pinMode(SENS3, INPUT);
-  pinMode(SENS4, INPUT);
   digitalWrite(SALIDA_PIN, LOW);
 
   Serial.println("Acerca una tarjeta...");
@@ -105,7 +97,7 @@ void loop() {
     Serial.println("Tarjeta autorizada");
     digitalWrite(SALIDA_PIN, HIGH);
     Serial.println("Voltaje generado");
-    delay(3000);
+    delay(50);
     digitalWrite(SALIDA_PIN, LOW);
   } else {
     Serial.println("Tarjeta NO autorizada");
