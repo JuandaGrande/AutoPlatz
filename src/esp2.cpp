@@ -5,10 +5,10 @@
 #include <UniversalTelegramBot.h>
 #include <ArduinoJson.h>
 
-#define WIFI_SSID       "Juanda"
-#define WIFI_PASSWORD   "Sofia3710"
-#define BOT_TOKEN       "8634679485:AAH1c0y8sEbnZHGftHaQenrNE-arYKncON0"
-#define SECRET_PASSWORD "1234"
+#define WIFI_SSID       "<Internet SSID>"
+#define WIFI_PASSWORD   "<Internet Password>"
+#define BOT_TOKEN       "<Telegram_Token>"
+#define SECRET_PASSWORD "<Telegram Password>"
 
 
 #define LED1     19
