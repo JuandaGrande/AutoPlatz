@@ -7,13 +7,13 @@
 #define SCK_PIN     18
 #define MISO_PIN    19
 #define MOSI_PIN    23
-#define SALIDA_PIN  2 //REVISAR DUPLICADO //Esto va a ESP2
-#define SENS1 35 //Interno
+#define SALIDA_PIN  15 //Esto va a ESP2
+#define SENS1 25 //Interno
 #define SENS2 32 //Interno
 #define SENS3 33 //Interno
-#define OCC1 15 //Va a ESP2
+#define OCC1 2 //Va a ESP2
 #define OCC2 4 //Va a ESP2
-#define OCC3 0 //CAMBIAR //Va a ESP2
+#define OCC3 16 //Va a ESP2
 
 
 MFRC522 rfid(SS_PIN, RST_PIN);
@@ -97,7 +97,7 @@ void loop() {
     Serial.println("Tarjeta autorizada");
     digitalWrite(SALIDA_PIN, HIGH);
     Serial.println("Voltaje generado");
-    delay(50);
+    delay(150);
     digitalWrite(SALIDA_PIN, LOW);
   } else {
     Serial.println("Tarjeta NO autorizada");
